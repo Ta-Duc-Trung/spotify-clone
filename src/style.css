@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+
+@theme {
+    --color-background-base: #000;
+    --color-foreground-base: #fff;
+    --color-background-card: #1f1f1f;
+    --color-background-card-hover: #282828;
+    --color-foreground-accent: #b3b3b3;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-background-base);
+        color: var(--color-foreground-base);
+    }
+}

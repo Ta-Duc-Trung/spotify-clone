@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>spotify-clone</title>
+        <link rel="stylesheet" href="./src/style.css" />
+    </head>
+    <body>
+        <div id="app" class="h-dvh flex flex-col">
+            <header class="h-16">Header</header>
+            <div class="flex flex-1 gap-2">
+                <aside class="w-1/4 pl-2 ml-2">Your library</aside>
+                <main
+                    class="w-3/4 mr-2 rounded-lg px-10 bg-[linear-gradient(to_bottom,#242424_0%,#121212_30%,#121212_100%)]"
+                >
+                    <section>
+                        <h2
+                            class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer"
+                        >
+                            Albums
+                        </h2>
+                        <div class="relative">
+                            <div
+                                id="album-list"
+                                class="-ml-3 mt-2 group gap-2 flex overflow-x-auto scrollbar-none"
+                            >
+                                <!-- Album item -->
+                                <div
+                                    class="shrink-0 rounded-md p-3 w-44 hover:cursor-pointer flex flex-col gap-2 hover:bg-background-card-hover transition-all duration-300 ease-out"
+                                >
+                                    <img
+                                        class="w-full object-cover rounded-md aspect-square"
+                                        src="https://picsum.photos/200/300"
+                                        alt="Album cover"
+                                    />
+                                    <h3
+                                        class="line-clamp-2 text-sm group-hover:underline"
+                                    >
+                                        MRT (feat. Xuân Định K.Y, buitruonglinh,
+                                        CAPTAIN BOY & HYO)
+                                    </h3>
+                                    <p
+                                        class="line-clamp-2 text-xs text-foreground-accent"
+                                    >
+                                        <a href="#!" class="hover:underline"
+                                            >TINH HÀ "SAY HI"</a
+                                        >
+                                        <span>,</span>
+                                        <a href="#!" class="hover:underline"
+                                            >Quang Hùng MasterD</a
+                                        >
+                                        <span>,</span>
+                                        <a href="#!" class="hover:underline"
+                                            >CODYNAMVO</a
+                                        >
+                                    </p>
+                                </div>
+                             </div>
+                            <!-- Phủ mờ bên phải -->
+                            <div
+                                class="pointer-events-none absolute right-0 top-0 z-10 h-full w-24 bg-gradient-to-l from-[#121212] to-transparent"
+                            ></div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <!-- Sign up -->
+            <div class="h-16">Sign up</div>
+        </div>
+
+        <script type="module" src="./src/main.js"></script>
+    </body>
+</html>
