@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập - Spotify Clone</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div class="min-h-dvh flex items-start justify-center pt-20 px-4 pb-10">
+    <div class="w-full max-w-sm flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-6">
+        <span class="text-black text-xl">🎵</span>
+      </div>
+
+      <h1 id="login-heading" class="text-4xl font-extrabold text-center mb-8">Welcome back</h1>
+
+      <form id="login-form" class="w-full flex flex-col gap-4">
+        <div>
+          <label class="text-sm font-bold" for="email">Email</label>
+          <input id="email" type="email" required autocomplete="email"
+            class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white" />
+        </div>
+
+        <div id="password-field" class="hidden">
+          <label class="text-sm font-bold" for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password"
+            class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white" />
+        </div>
+
+        <p id="error-message" class="text-red-500 text-sm"></p>
+
+        <button id="continue-btn" type="button"
+          class="rounded-full bg-green-500 text-black font-bold py-3 hover:scale-105 hover:bg-green-400 transition">
+          Continue
+        </button>
+        <button id="submit-btn" type="submit"
+          class="hidden rounded-full bg-green-500 text-black font-bold py-3 hover:scale-105 hover:bg-green-400 transition">
+          Log in
+        </button>
+      </form>
+
+      <div class="flex items-center gap-3 w-full my-6">
+        <span class="flex-1 h-px bg-white/20"></span>
+        <span class="text-sm text-foreground-accent">or</span>
+        <span class="flex-1 h-px bg-white/20"></span>
+      </div>
+
+      <div class="w-full flex flex-col gap-3">
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>📱</span> Continue with phone number
+        </button>
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>G</span> Continue with Google
+        </button>
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>f</span> Continue with Facebook
+        </button>
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>🍎</span> Continue with Apple
+        </button>
+      </div>
+
+      <p class="text-center text-foreground-accent text-sm mt-10">
+        Don't have an account? <a href="./signup.html" class="text-white font-bold underline">Sign up</a>
+      </p>
+    </div>
+  </div>
+  <script type="module" src="./src/login.js"></script>
+</body>
+</html>

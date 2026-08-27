@@ -1,7 +1,6 @@
 import { httpRequest } from "./libs/httpRequest";
 import { auth } from "./libs/auth";
 import { player } from "./player";
-import { authModal } from "./authModal";
 
 const albumListEl = document.querySelector("#album-list");
 const artistListEl = document.querySelector("#artist-list");
@@ -24,25 +23,54 @@ const fetchData = async (path) => {
 const mapItem = (type, item) => {
     switch (type) {
         case "albums":
-            return { id: item.id, image: item.cover_image_url, title: item.title, description: item.artist_name };
+            return {
+                id: item.id,
+                image: item.cover_image_url,
+                title: item.title,
+                description: item.artist_name,
+            };
         case "artists":
-            return { id: item.id, image: item.image_url, title: item.name, description: "Nghệ sĩ" };
+            return {
+                id: item.id,
+                image: item.image_url,
+                title: item.name,
+                description: "Nghệ sĩ",
+            };
         case "tracks":
-            return { id: item.id, image: item.image_url, title: item.title, description: item.artist_name };
+            return {
+                id: item.id,
+                image: item.image_url,
+                title: item.title,
+                description: item.artist_name,
+            };
         case "playlists":
-            return { id: item.id, image: item.image_url, title: item.name, description: item.description };
+            return {
+                id: item.id,
+                image: item.image_url,
+                title: item.name,
+                description: item.description,
+            };
     }
 };
 
-const isPlayable = (type) => type === "albums" || type === "tracks" || type === "playlists";
+const isPlayable = (type) =>
+    type === "albums" || type === "tracks" || type === "playlists";
 
 const renderData = (type, rawItems) => {
     let parent;
     switch (type) {
-        case "albums": parent = albumListEl; break;
-        case "artists": parent = artistListEl; break;
-        case "tracks": parent = trackListEl; break;
-        case "playlists": parent = playlistListEl; break;
+        case "albums":
+            parent = albumListEl;
+            break;
+        case "artists":
+            parent = artistListEl;
+            break;
+        case "tracks":
+            parent = trackListEl;
+            break;
+        case "playlists":
+            parent = playlistListEl;
+            break;
     }
 
     if (type === "tracks") {
@@ -106,7 +134,6 @@ const handlePlay = (type, id) => {
     if (type === "playlists") return player.playPlaylistById(id);
 };
 
-// ===== HEADER: đăng nhập / đăng ký =====
 const renderHeader = () => {
     if (!authAreaEl) return;
     if (auth.isAuthenticated()) {
@@ -120,27 +147,26 @@ const renderHeader = () => {
         });
     } else {
         authAreaEl.innerHTML = `
-      <button id="open-signup-btn" class="text-sm text-foreground-accent hover:text-white font-bold px-3">Đăng ký</button>
-      <button id="open-login-btn" class="rounded-full bg-white text-black text-sm font-bold px-6 py-2 hover:scale-105 transition">Đăng nhập</button>`;
-        document.querySelector("#open-signup-btn").addEventListener("click", () => authModal.open("signup"));
-        document.querySelector("#open-login-btn").addEventListener("click", () => authModal.open("login"));
+      <a href="./signup.html" class="text-sm text-foreground-accent hover:text-white font-bold px-3">Sign up</a>
+      <a href="./login.html" class="rounded-full bg-white text-black text-sm font-bold px-6 py-2 hover:scale-105 transition">Log in</a>`;
     }
     updateSignupBanner();
 };
 
-// ===== CUỘN NGANG DANH SÁCH =====
 const initHorizontalScroll = () => {
     document.querySelectorAll("[data-scroll-target]").forEach((btn) => {
         btn.addEventListener("click", () => {
             const list = document.querySelector(`#${btn.dataset.scrollTarget}`);
             if (!list) return;
             const dir = Number(btn.dataset.scrollDir);
-            list.scrollBy({ left: dir * list.clientWidth * 0.8, behavior: "smooth" });
+            list.scrollBy({
+                left: dir * list.clientWidth * 0.8,
+                behavior: "smooth",
+            });
         });
     });
 };
 
-// ===== TÌM KIẾM =====
 let searchDebounceTimer;
 
 const renderSearchResults = (data) => {
@@ -164,7 +190,10 @@ const renderSearchResults = (data) => {
     };
 
     searchResultsEl.innerHTML =
-        section("Bài hát", tracks.slice(0, 5), (t) => `
+        section(
+            "Bài hát",
+            tracks.slice(0, 5),
+            (t) => `
           <button type="button" data-search-track="${t.id}"
             class="w-full flex items-center gap-3 px-2 py-2 rounded hover:bg-white/10 text-left">
             <img src="${t.image_url || FALLBACK_IMG}" class="w-10 h-10 rounded object-cover" />
@@ -172,16 +201,24 @@ const renderSearchResults = (data) => {
               <p class="text-sm truncate">${t.title}</p>
               <p class="text-xs text-foreground-accent truncate">${t.artist_name || ""}</p>
             </div>
-          </button>`) +
-        section("Nghệ sĩ", artists.slice(0, 5), (a) => `
+          </button>`,
+        ) +
+        section(
+            "Nghệ sĩ",
+            artists.slice(0, 5),
+            (a) => `
           <div class="w-full flex items-center gap-3 px-2 py-2 rounded">
             <img src="${a.image_url || FALLBACK_IMG}" class="w-10 h-10 rounded-full object-cover" />
             <div class="min-w-0">
               <p class="text-sm truncate">${a.name}</p>
               <p class="text-xs text-foreground-accent truncate">Nghệ sĩ</p>
             </div>
-          </div>`) +
-        section("Album", albums.slice(0, 5), (al) => `
+          </div>`,
+        ) +
+        section(
+            "Album",
+            albums.slice(0, 5),
+            (al) => `
           <button type="button" data-search-album="${al.id}"
             class="w-full flex items-center gap-3 px-2 py-2 rounded hover:bg-white/10 text-left">
             <img src="${al.cover_image_url || FALLBACK_IMG}" class="w-10 h-10 rounded object-cover" />
@@ -189,7 +226,8 @@ const renderSearchResults = (data) => {
               <p class="text-sm truncate">${al.title}</p>
               <p class="text-xs text-foreground-accent truncate">${al.artist_name || "Album"}</p>
             </div>
-          </button>`);
+          </button>`,
+        );
 
     searchResultsEl.classList.remove("hidden");
 
@@ -219,19 +257,23 @@ const initSearch = () => {
             return;
         }
         searchDebounceTimer = setTimeout(async () => {
-            const data = await httpRequest.get(`/api/search?q=${encodeURIComponent(q)}&type=all&limit=10`);
+            const data = await httpRequest.get(
+                `/api/search?q=${encodeURIComponent(q)}&type=all&limit=10`,
+            );
             renderSearchResults(data || {});
         }, 350);
     });
 
     document.addEventListener("click", (e) => {
-        if (!e.target.closest("#search-input") && !e.target.closest("#search-results")) {
+        if (
+            !e.target.closest("#search-input") &&
+            !e.target.closest("#search-results")
+        ) {
             searchResultsEl.classList.add("hidden");
         }
     });
 };
 
-// ===== ĐỔI NGÔN NGỮ (nhãn hiển thị, chưa dịch nội dung) =====
 const initLanguageMenu = () => {
     const btn = document.querySelector("#language-btn");
     const menu = document.querySelector("#language-menu");
@@ -257,7 +299,6 @@ const initHomeButton = () => {
     });
 };
 
-// ===== BANNER "SIGN UP FREE" =====
 let signupBannerDismissed = false;
 
 const updateSignupBanner = () => {
@@ -273,15 +314,19 @@ const updateSignupBanner = () => {
 };
 
 const initSignupBanner = () => {
-    document.querySelector("#signup-banner-btn")?.addEventListener("click", () => authModal.open("signup"));
-    document.querySelector("#signup-banner-close")?.addEventListener("click", () => {
-        signupBannerDismissed = true;
-        updateSignupBanner();
-    });
-};
+    const signupBtn = document.querySelector("#signup-banner-btn");
 
+    signupBtn?.addEventListener("click", () => {
+        window.location.href = "./signup.html";
+    });
+    document
+        .querySelector("#signup-banner-close")
+        ?.addEventListener("click", () => {
+            signupBannerDismissed = true;
+            updateSignupBanner();
+        });
+};
 // ===== KHỞI CHẠY =====
-authModal.init({ onSuccess: renderHeader });
 renderHeader();
 player.init();
 initHorizontalScroll();

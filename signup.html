@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng ký - Spotify Clone</title>
+  <link rel="stylesheet" href="./src/style.css" />
+</head>
+<body>
+  <div class="min-h-dvh flex items-start justify-center pt-16 px-4 pb-10">
+    <div class="w-full max-w-sm flex flex-col items-center">
+      <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-6">
+        <span class="text-black text-xl">🎵</span>
+      </div>
+
+      <h1 class="text-4xl font-extrabold text-center mb-8 leading-tight">Sign up to<br />start listening</h1>
+
+      <form id="signup-form" class="w-full flex flex-col gap-4">
+        <div>
+          <label class="text-sm font-bold" for="email">Email address</label>
+          <input id="email" type="email" required placeholder="name@domain.com"
+            class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white placeholder:text-foreground-accent" />
+        </div>
+
+        <div id="extra-fields" class="hidden flex-col gap-4">
+          <div>
+            <label class="text-sm font-bold" for="username">Username</label>
+            <input id="username" type="text"
+              class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white" />
+          </div>
+          <div>
+            <label class="text-sm font-bold" for="display_name">Display name</label>
+            <input id="display_name" type="text"
+              class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white" />
+          </div>
+          <div>
+            <label class="text-sm font-bold" for="password">Password</label>
+            <input id="password" type="password"
+              class="mt-1 w-full rounded-md bg-transparent border border-white/40 px-3 py-3 focus:outline-none focus:border-white" />
+          </div>
+        </div>
+
+        <p id="error-message" class="text-red-500 text-sm"></p>
+
+        <button id="next-btn" type="button"
+          class="rounded-full bg-green-500 text-black font-bold py-3 hover:scale-105 hover:bg-green-400 transition">
+          Next
+        </button>
+        <button id="submit-btn" type="submit"
+          class="hidden rounded-full bg-green-500 text-black font-bold py-3 hover:scale-105 hover:bg-green-400 transition">
+          Sign up
+        </button>
+      </form>
+
+      <div class="flex items-center gap-3 w-full my-6">
+        <span class="flex-1 h-px bg-white/20"></span>
+        <span class="text-sm text-foreground-accent">or</span>
+        <span class="flex-1 h-px bg-white/20"></span>
+      </div>
+
+      <div class="w-full flex flex-col gap-3">
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>📱</span> Sign up with phone number
+        </button>
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>G</span> Sign up with Google
+        </button>
+        <button type="button" class="flex items-center gap-3 justify-center rounded-full border border-white/40 py-3 font-bold hover:border-white transition">
+          <span>🍎</span> Sign up with Apple
+        </button>
+      </div>
+
+      <p class="text-center text-foreground-accent text-sm mt-10">
+        Already have an account? <a href="./login.html" class="text-white font-bold underline">Log in</a>
+      </p>
+    </div>
+    
+  </div>
+  
+  <script type="module" src="./src/signup.js"></script>
+</body>
+</html>
