@@ -9,59 +9,248 @@
     </head>
     <body>
         <div id="app" class="flex h-dvh flex-col">
-            <header class="h-16">Header</header>
-            <div class="flex h-[calc(100%-8rem)] gap-2">
-                <aside class="w-1/4 ml-2">Your library</aside>
-                <main
-                    class="w-3/4 mr-2 rounded-lg bg-background-card px-10 overflow-y-auto scrollbar-none"
-                >
+           <header class="h-16 flex items-center justify-between gap-4 px-6 bg-black">
+    <!-- TRÁI: chỉ có logo -->
+    <div class="flex items-center shrink-0">
+        <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shrink-0">
+            <span class="text-black text-sm">🎵</span>
+        </div>
+    </div>
+
+    <!-- GIỮA: home + search đi sát nhau thành 1 cụm, cụm này canh giữa header -->
+    <div class="flex-1 flex justify-center px-4">
+        <div class="flex items-center gap-2 w-full max-w-md">
+            <button id="home-btn" type="button" title="Trang chủ"
+                class="w-10 h-10 rounded-full bg-background-card flex items-center justify-center hover:bg-background-card-hover shrink-0">
+                🏠
+            </button>
+
+            <div class="relative flex-1">
+                <div class="flex items-center gap-2 bg-background-card rounded-full px-4 py-2 border border-transparent focus-within:border-white">
+                    <span>🔍</span>
+                    <input id="search-input" type="text" autocomplete="off" placeholder="Bạn muốn phát nội dung gì?"
+                        class="bg-transparent flex-1 text-sm focus:outline-none placeholder:text-foreground-accent" />
+                </div>
+                <div id="search-results" class="hidden absolute top-full mt-2 w-full bg-background-card-hover rounded-md shadow-xl max-h-96 overflow-y-auto z-20 p-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHẢI: menu + đăng nhập -->
+    <div class="flex items-center gap-4 text-sm shrink-0">
+        <a href="#!" class="hidden md:inline font-bold text-foreground-accent hover:text-white">Premium</a>
+        <a href="#!" class="hidden md:inline font-bold text-foreground-accent hover:text-white">Support</a>
+        <a href="#!" class="hidden lg:inline font-bold text-foreground-accent hover:text-white">Download</a>
+        <span class="hidden lg:inline w-px h-6 bg-white/20"></span>
+        <a href="#!" class="hidden lg:inline font-bold text-foreground-accent hover:text-white">⭳ Install App</a>
+        <div id="auth-area" class="flex items-center gap-3"></div>
+    </div>
+</header>
+
+            <div class="flex h-[calc(100%-9rem)] gap-2 px-2">
+                <!-- SIDEBAR -->
+                <aside class="w-1/4 flex flex-col rounded-lg bg-background-card overflow-y-auto scrollbar-none">
+                    <div class="flex items-center justify-between px-4 pt-4">
+                        <h2 class="font-bold text-foreground-accent hover:text-white cursor-pointer">Thư viện của bạn</h2>
+                        <button type="button" title="Tạo playlist"
+                            class="w-8 h-8 rounded-full hover:bg-background-card-hover flex items-center justify-center">+</button>
+                    </div>
+
+                    <div class="px-4 mt-4 flex flex-col gap-3">
+                        <div class="bg-background-card-hover rounded-lg p-4">
+                            <p class="font-bold text-sm mb-1">Tạo playlist đầu tiên của bạn</p>
+                            <p class="text-xs text-foreground-accent mb-3">Việc này rất dễ, chúng tôi sẽ hỗ trợ bạn</p>
+                            <button type="button" class="rounded-full bg-white text-black text-xs font-bold px-4 py-2 hover:scale-105 transition">
+                                Tạo playlist
+                            </button>
+                        </div>
+                        <div class="bg-background-card-hover rounded-lg p-4">
+                            <p class="font-bold text-sm mb-1">Cùng tìm vài podcast để theo dõi</p>
+                            <p class="text-xs text-foreground-accent mb-3">Chúng tôi sẽ cập nhật tập mới cho bạn</p>
+                            <button type="button" class="rounded-full bg-white text-black text-xs font-bold px-4 py-2 hover:scale-105 transition">
+                                Duyệt qua podcast
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto px-4 pb-4 pt-6 text-xs text-foreground-accent">
+                        <div class="flex flex-wrap gap-x-3 gap-y-1 mb-4">
+                            <a href="#!" class="hover:underline">Pháp lý</a>
+                            <a href="#!" class="hover:underline">Trung tâm an toàn & quyền riêng tư</a>
+                            <a href="#!" class="hover:underline">Chính sách quyền riêng tư</a>
+                            <a href="#!" class="hover:underline">Cookie</a>
+                            <a href="#!" class="hover:underline">Giới thiệu quảng cáo</a>
+                            <a href="#!" class="hover:underline">Khả năng truy cập</a>
+                        </div>
+                        <div class="relative inline-block">
+                            <button id="language-btn" type="button"
+                                class="flex items-center gap-2 border border-white/30 rounded-full px-3 py-1.5 hover:border-white">
+                                🌐 <span id="language-label">Tiếng Việt</span>
+                            </button>
+                            <div id="language-menu" class="hidden absolute bottom-full mb-2 left-0 bg-background-card-hover rounded-md shadow-xl py-1 w-32">
+                                <button type="button" data-lang="Tiếng Việt" class="w-full text-left px-3 py-2 hover:bg-white/10">Tiếng Việt</button>
+                                <button type="button" data-lang="English" class="w-full text-left px-3 py-2 hover:bg-white/10">English</button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- MAIN -->
+                <main class="w-3/4 rounded-lg bg-background-card px-10 overflow-y-auto scrollbar-none">
                     <section>
-                        <h2
-                            class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer"
-                        >
-                            Albums
-                        </h2>
-                        <div
-                            id="album-list"
-                            class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start"
-                        ></div>
+                        <h2 class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer">Albums</h2>
+                        <div class="relative group/scroll">
+                            <button type="button" data-scroll-target="album-list" data-scroll-dir="-1"
+                                class="hidden group-hover/scroll:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">‹</button>
+                            <div id="album-list" class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start scroll-smooth"></div>
+                            <button type="button" data-scroll-target="album-list" data-scroll-dir="1"
+                                class="hidden group-hover/scroll:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">›</button>
+                        </div>
                     </section>
+
                     <section>
-                        <h2
-                            class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer"
-                        >
-                            Artists
-                        </h2>
-                        <div
-                            id="artist-list"
-                            class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start"
-                        ></div>
+                        <h2 class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer">Artists</h2>
+                        <div class="relative group/scroll">
+                            <button type="button" data-scroll-target="artist-list" data-scroll-dir="-1"
+                                class="hidden group-hover/scroll:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">‹</button>
+                            <div id="artist-list" class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start scroll-smooth"></div>
+                            <button type="button" data-scroll-target="artist-list" data-scroll-dir="1"
+                                class="hidden group-hover/scroll:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">›</button>
+                        </div>
                     </section>
+
                     <section>
-                        <h2
-                            class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer"
-                        >
-                            Tracks
-                        </h2>
-                        <div
-                            id="track-list"
-                            class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start"
-                        ></div>
+                        <h2 class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer">Tracks</h2>
+                        <div class="relative group/scroll">
+                            <button type="button" data-scroll-target="track-list" data-scroll-dir="-1"
+                                class="hidden group-hover/scroll:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">‹</button>
+                            <div id="track-list" class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start scroll-smooth"></div>
+                            <button type="button" data-scroll-target="track-list" data-scroll-dir="1"
+                                class="hidden group-hover/scroll:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">›</button>
+                        </div>
                     </section>
+
                     <section>
-                        <h2
-                            class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer"
-                        >
-                            Playlists
-                        </h2>
-                        <div
-                            id="playlist-list"
-                            class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start"
-                        ></div>
+                        <h2 class="mt-5 text-2xl font-bold hover:underline hover:cursor-pointer">Playlists</h2>
+                        <div class="relative group/scroll">
+                            <button type="button" data-scroll-target="playlist-list" data-scroll-dir="-1"
+                                class="hidden group-hover/scroll:flex absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">‹</button>
+                            <div id="playlist-list" class="-ml-3 mt-2 flex overflow-x-auto scrollbar-none items-start scroll-smooth"></div>
+                            <button type="button" data-scroll-target="playlist-list" data-scroll-dir="1"
+                                class="hidden group-hover/scroll:flex absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-black/70 text-white items-center justify-center hover:bg-black hover:scale-105 transition">›</button>
+                        </div>
                     </section>
                 </main>
             </div>
-            <div class="h-16">Sign up</div>
+
+            <!-- SIGN UP FREE BANNER -->
+            <div id="signup-banner" class="hidden items-center justify-between gap-4 px-6 py-3 bg-gradient-to-r from-fuchsia-700 via-purple-600 to-blue-500">
+                <div>
+                    <p class="font-bold text-sm">Xem trước Spotify</p>
+                    <p class="text-xs">Đăng ký để nghe nhạc và podcast không giới hạn với một vài quảng cáo. Không cần thẻ tín dụng.</p>
+                </div>
+                <div class="flex items-center gap-3 shrink-0">
+                    <button id="signup-banner-btn" type="button" class="rounded-full bg-white text-black text-sm font-bold px-5 py-2 hover:scale-105 transition">
+                        Đăng ký miễn phí
+                    </button>
+                    <button id="signup-banner-close" type="button" class="text-white/80 hover:text-white text-lg">&times;</button>
+                </div>
+            </div>
+
+            <!-- PLAYER BAR -->
+            <div id="player-bar" class="h-20 border-t border-white/10 px-4 flex items-center justify-between invisible">
+                <div class="flex items-center gap-3 w-1/4 min-w-0">
+                    <img id="player-cover" src="" class="w-14 h-14 rounded object-cover" alt="" />
+                    <div class="min-w-0">
+                        <p id="player-title" class="text-sm truncate"></p>
+                        <p id="player-artist" class="text-xs text-foreground-accent truncate"></p>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center gap-1 w-1/2">
+                    <div class="flex items-center gap-4">
+                        <button id="prev-btn" class="text-foreground-accent hover:text-white">⏮</button>
+                        <button id="play-pause-btn" class="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center">▶</button>
+                        <button id="next-btn" class="text-foreground-accent hover:text-white">⏭</button>
+                    </div>
+                    <div class="flex items-center gap-2 w-full text-xs text-foreground-accent">
+                        <span id="current-time">0:00</span>
+                        <input id="progress-bar" type="range" min="0" max="100" value="0" class="w-full" />
+                        <span id="duration-time">0:00</span>
+                    </div>
+                </div>
+                <div class="w-1/4 flex justify-end items-center gap-2">
+                    <span>🔊</span>
+                    <input id="volume-bar" type="range" min="0" max="100" value="80" class="w-24" />
+                </div>
+                <audio id="audio-el"></audio>
+            </div>
+
+            <!-- AUTH MODAL -->
+            <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70">
+                <div class="relative w-full max-w-sm bg-background-card rounded-lg p-8">
+                    <button id="modal-close-btn" class="absolute top-3 right-3 text-foreground-accent hover:text-white text-xl">&times;</button>
+
+                    <div id="login-view">
+                        <h2 class="text-2xl font-extrabold text-center mb-6">Đăng nhập vào Spotify</h2>
+                        <form id="login-form" class="flex flex-col gap-4">
+                            <div>
+                                <label class="text-sm font-bold" for="login-email">Email</label>
+                                <input id="login-email" type="email" required
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <div>
+                                <label class="text-sm font-bold" for="login-password">Mật khẩu</label>
+                                <input id="login-password" type="password" required
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <p id="login-error" class="text-red-500 text-sm"></p>
+                            <button id="login-submit-btn" type="submit"
+                                class="rounded-full bg-green-500 text-black font-bold py-3 mt-2 hover:scale-105 hover:bg-green-400 transition">
+                                Đăng nhập
+                            </button>
+                        </form>
+                        <p class="text-center text-foreground-accent text-sm mt-6">
+                            Chưa có tài khoản?
+                            <button type="button" id="go-signup-btn" class="text-white underline">Đăng ký ngay</button>
+                        </p>
+                    </div>
+
+                    <div id="signup-view" class="hidden">
+                        <h2 class="text-2xl font-extrabold text-center mb-6">Đăng ký để bắt đầu nghe nhạc</h2>
+                        <form id="signup-form" class="flex flex-col gap-4">
+                            <div>
+                                <label class="text-sm font-bold" for="signup-email">Email</label>
+                                <input id="signup-email" type="email" required
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <div>
+                                <label class="text-sm font-bold" for="signup-username">Tên đăng nhập</label>
+                                <input id="signup-username" type="text" required
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <div>
+                                <label class="text-sm font-bold" for="signup-display-name">Tên hiển thị</label>
+                                <input id="signup-display-name" type="text"
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <div>
+                                <label class="text-sm font-bold" for="signup-password">Mật khẩu</label>
+                                <input id="signup-password" type="password" required
+                                    class="mt-1 w-full rounded-md bg-transparent border border-white/30 px-3 py-3 focus:outline-none focus:border-white" />
+                            </div>
+                            <p id="signup-error" class="text-red-500 text-sm"></p>
+                            <button id="signup-submit-btn" type="submit"
+                                class="rounded-full bg-green-500 text-black font-bold py-3 mt-2 hover:scale-105 hover:bg-green-400 transition">
+                                Đăng ký
+                            </button>
+                        </form>
+                        <p class="text-center text-foreground-accent text-sm mt-6">
+                            Đã có tài khoản?
+                            <button type="button" id="go-login-btn" class="text-white underline">Đăng nhập</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script type="module" src="./src/main.js"></script>
