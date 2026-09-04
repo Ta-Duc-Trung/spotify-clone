@@ -3,7 +3,18 @@ import { httpRequest } from "./libs/httpRequest";
 const FALLBACK_IMG =
     "https://community.spotify.com/t5/image/serverpage/image-id/196380iDD24539B5FCDEAF9/image-size/medium?v=v2&px=400";
 
-let audioEl, playerBar, coverEl, titleEl, artistEl, playPauseBtn, prevBtn, nextBtn, progressBar, currentTimeEl, durationTimeEl, volumeBar;
+let audioEl,
+    playerBar,
+    coverEl,
+    titleEl,
+    artistEl,
+    playPauseBtn,
+    prevBtn,
+    nextBtn,
+    progressBar,
+    currentTimeEl,
+    durationTimeEl,
+    volumeBar;
 
 let queue = [];
 let currentIndex = -1;
@@ -11,7 +22,9 @@ let currentIndex = -1;
 const formatTime = (sec) => {
     if (!isFinite(sec) || sec < 0) return "0:00";
     const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60).toString().padStart(2, "0");
+    const s = Math.floor(sec % 60)
+        .toString()
+        .padStart(2, "0");
     return `${m}:${s}`;
 };
 
@@ -19,7 +32,13 @@ const formatTime = (sec) => {
 // hoặc bọc trong { track: {...} } (kiểu playlist item) -> chuẩn hoá lại
 const extractTracks = (data) => {
     if (!data) return [];
-    const arr = Array.isArray(data.tracks) ? data.tracks : Array.isArray(data.data) ? data.data : Array.isArray(data) ? data : [];
+    const arr = Array.isArray(data.tracks)
+        ? data.tracks
+        : Array.isArray(data.data)
+          ? data.data
+          : Array.isArray(data)
+            ? data
+            : [];
     return arr.map((t) => t.track || t);
 };
 
@@ -104,11 +123,20 @@ export const player = {
     },
 
     async playPlaylistById(playlistId) {
-        const data = await httpRequest.get(`/api/playlists/${playlistId}/tracks`);
+        const data = await httpRequest.get(
+            `/api/playlists/${playlistId}/tracks`,
+        );
         const tracks = extractTracks(data);
         if (tracks.length) this.playQueue(tracks, 0);
     },
 
+    async playArtistById(artistId) {
+        const data = await httpRequest.get(
+            `/api/artists/${artistId}/tracks/popular`,
+        );
+        const tracks = extractTracks(data);
+        if (tracks.length) this.playQueue(tracks, 0);
+    },
     togglePlay() {
         if (!audioEl.src) return;
         if (audioEl.paused) {

@@ -54,7 +54,10 @@ const mapItem = (type, item) => {
 };
 
 const isPlayable = (type) =>
-    type === "albums" || type === "tracks" || type === "playlists";
+    type === "artists" ||
+    type === "albums" ||
+    type === "tracks" ||
+    type === "playlists";
 
 const renderData = (type, rawItems) => {
     let parent;
@@ -81,17 +84,25 @@ const renderData = (type, rawItems) => {
 
     parent.innerHTML = items
         .map((item) => {
+            const isArtist = type === "artists";
+
             const playBtn = isPlayable(type)
-                ? `<button
-                    data-play-btn
-                    class="absolute right-2 bottom-2 w-10 h-10 rounded-full bg-green-500 text-black flex items-center justify-center opacity-0 translate-y-2 shadow-lg transition-all group-hover:opacity-100 group-hover:translate-y-0 hover:scale-105 hover:bg-green-400"
-                   ><span class="text-base">▶</span></button>`
+                ? isArtist
+                    ? `<button
+                        data-play-btn
+                        class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-green-500 text-black flex items-center justify-center opacity-0 scale-90 shadow-lg transition-all group-hover:opacity-100 group-hover:scale-100 hover:scale-110 hover:bg-green-400"
+                       ><span class="text-lg">▶</span></button>`
+                    : `<button
+                        data-play-btn
+                        class="absolute right-2 bottom-2 w-10 h-10 rounded-full bg-green-500 text-black flex items-center justify-center opacity-0 translate-y-2 shadow-lg transition-all group-hover:opacity-100 group-hover:translate-y-0 hover:scale-105 hover:bg-green-400"
+                       ><span class="text-base">▶</span></button>`
                 : "";
+
             return `
     <div class="group relative shrink-0 rounded-md p-3 w-44 hover:cursor-pointer flex flex-col gap-2 hover:bg-background-card-hover"
       data-id="${item.id}" data-type="${type}">
       <div class="relative">
-        <img class="w-full aspect-square object-cover ${type === "artists" ? "rounded-full" : "rounded-md"}"
+        <img class="w-full aspect-square object-cover transition ${isArtist ? "rounded-full group-hover:brightness-50" : "rounded-md"}"
           src="${item.image}" alt="${item.title}" />
         ${playBtn}
       </div>
@@ -102,7 +113,6 @@ const renderData = (type, rawItems) => {
     </div>`;
         })
         .join("");
-
     parent.querySelectorAll("img").forEach((imgEl) => {
         imgEl.addEventListener("error", () => (imgEl.src = FALLBACK_IMG));
     });
@@ -132,6 +142,7 @@ const handlePlay = (type, id) => {
     }
     if (type === "albums") return player.playAlbumById(id);
     if (type === "playlists") return player.playPlaylistById(id);
+    if (type === "artists") return player.playArtistById(id);
 };
 
 const renderHeader = () => {
